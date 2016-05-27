@@ -1,0 +1,8 @@
+[Desktop Entry]
+_Name=Jenkins
+_Comment=Jenkins application
+Categories=GNOME;Utility;
+Exec=jenkins
+Icon=jenkins
+Terminal=false
+Type=Application
