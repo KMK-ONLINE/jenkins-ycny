@@ -102,6 +102,8 @@ class Window(Gtk.Window):
     def on_destroy(self, widget, data=None):
         """Called when the JenkinsWindow is closed."""
         # Clean up code for saving application state should be added here.
+        self.indicator.shutdown()
+
         Gtk.main_quit()
 
     def on_preferences_changed(self, settings, key, data=None):

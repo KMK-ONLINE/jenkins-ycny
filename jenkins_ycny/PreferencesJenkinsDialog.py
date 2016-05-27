@@ -28,6 +28,9 @@ class PreferencesJenkinsDialog(PreferencesDialog):
         # Bind each preference widget to gsettings
         settings = Gio.Settings("net.launchpad.jenkins-ycny")
 
+        widget = self.builder.get_object('proj_dir_entry')
+        settings.bind("project-dir", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+
         widget = self.builder.get_object('ci_url_entry')
         settings.bind("ci-url", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 

@@ -16,5 +16,10 @@
       <summary>Slave Jobs</summary>
       <description>Slave or Children Job (seprated by comma).</description>
     </key>
+    <key name="project-dir" type="s">
+      <default>''</default>
+      <summary>Project Dir</summary>
+      <description>Project Dir to get Author Name.</description>
+    </key>
   </schema>
 </schemalist>
