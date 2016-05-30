@@ -29,5 +29,5 @@ def main():
 
     # Run the application.    
     window = JenkinsWindow.JenkinsWindow()
-    window.show()
+    #window.show()
     Gtk.main()

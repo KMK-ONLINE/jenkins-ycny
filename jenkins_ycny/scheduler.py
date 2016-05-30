@@ -2,6 +2,9 @@ from gi.repository import GLib
 
 from . api import *
 
+import logging
+logger = logging.getLogger('jenkins')
+
 class UpdateObject(object):
     def __init__(self):
         self.m_job = None
@@ -14,7 +17,7 @@ class UpdateObject(object):
         try:
             return (job.lastBuild.result, job.lastCompletedBuild.result)
         except Exception as e:
-            print(e)
+            logger.exception(e)
             return ('ERROR', 'ERROR')
 
     def update_results(self):
@@ -31,7 +34,7 @@ class JenkinsScheduler(object):
         self.parse_settings()
         self.displays = []
 
-    def parse_settings(self):       
+    def parse_settings(self):
         self.ci_url = self.window.settings.get_string('ci-url')
         self.master_job = self.window.settings.get_string('master-job')
         self.slave_jobs = [x.strip() for x in self.window.settings.get_string('slave-jobs').split(',')]
