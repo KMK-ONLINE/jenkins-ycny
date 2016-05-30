@@ -41,3 +41,14 @@ class PreferencesJenkinsDialog(PreferencesDialog):
         settings.bind("slave-jobs", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
         # Code for other initialization actions should be added here.
+    
+
+        self.connect('delete-event', self.apply_config)
+
+    def apply_config(self, widget, event):
+        print "Ok1"
+        return False
+
+    def on_btn_close_clicked(self, widget, data=None):
+        print "Ok2"
+        PreferencesDialog.on_btn_close_clicked(self, widget, data)

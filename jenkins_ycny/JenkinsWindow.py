@@ -144,6 +144,3 @@ class JenkinsWindow(Window):
 
         if me in culprits:
             your_country_needs_you()
-
-	def on_preferences_changed(self, settings, key, data=None):
-		Window.on_preferences_changed(self, settings, key, data)
