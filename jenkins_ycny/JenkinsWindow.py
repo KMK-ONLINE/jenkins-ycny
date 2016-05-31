@@ -144,7 +144,7 @@ class JenkinsWindow(Window):
         logger.debug(culprits)
         logger.debug(self.suspect.current_user())
 
-        me = self.suspect.current_user()
+        me = self.suspect.current_user()[0]
 
         if me in culprits:
             your_country_needs_you()
