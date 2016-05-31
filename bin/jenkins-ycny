@@ -8,7 +8,7 @@
 
 import sys
 import os
-
+import subprocess
 import locale
 locale.textdomain('jenkins_ycny')
 
@@ -16,7 +16,13 @@ locale.textdomain('jenkins_ycny')
 PROJECT_ROOT_DIRECTORY = os.path.abspath(
     os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))
 
+def compile_schema():
+    schemapath = os.path.join(PROJECT_ROOT_DIRECTORY, "data/glib-2.0/schemas")
+    if os.path.exists(schemapath):
+        subprocess.call(["glib-compile-schemas", schemapath])
+
 python_path = []
+
 if os.path.abspath(__file__).startswith('/opt'):
     locale.bindtextdomain('jenkins_ycny', '/opt/extras.ubuntu.com/jenkins_ycny/share/locale')
     syspath = sys.path[:] # copy to avoid infinite loop in pending objects
@@ -25,12 +31,21 @@ if os.path.abspath(__file__).startswith('/opt'):
         python_path.insert(0, opt_path)
         sys.path.insert(0, opt_path)
     os.putenv("XDG_DATA_DIRS", "%s:%s" % ("/opt/extras.ubuntu.com/jenkins_ycny/share/", os.getenv("XDG_DATA_DIRS", "/usr/local/share/:/usr/share/")))
+
 if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'jenkins_ycny'))
     and PROJECT_ROOT_DIRECTORY not in sys.path):
     python_path.insert(0, PROJECT_ROOT_DIRECTORY)
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
+
+    datadir = os.path.join(PROJECT_ROOT_DIRECTORY, "data")
+    if 'XDG_DATA_DIRS' in os.environ:
+        os.putenv('XDG_DATA_DIRS', "%s:%s" % (datadir, os.getenv('XDG_DATA_DIRS', '')))
+    else:
+        os.putenv('XDG_DATA_DIRS', datadir)
+
 if python_path:
     os.putenv('PYTHONPATH', "%s:%s" % (os.getenv('PYTHONPATH', ''), ':'.join(python_path))) # for subprocesses
 
+compile_schema()
 import jenkins_ycny
 jenkins_ycny.main()
