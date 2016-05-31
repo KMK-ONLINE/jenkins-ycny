@@ -56,6 +56,10 @@ class SplashScreen(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Your Country Needs You")
 
+        icon_uri = get_media_file('jenkins.ico')
+        icon_path = icon_uri.replace("file:///", '')
+        self.set_icon_from_file(icon_path)
+
         icon_uri = get_media_file('YourCountryNeedsYou.jpg')
         icon_path = icon_uri.replace("file:///", '')
 
@@ -65,7 +69,6 @@ class SplashScreen(Gtk.Window):
         self.add(img)
 
         self.modify_bg(Gtk.StateType.NORMAL, Gdk.color_parse('#E6DCAD'))
-        self.connect('delete-event', self.close_window)
 
     def show(self):
         self.resize(1024, 768)
@@ -74,19 +77,17 @@ class SplashScreen(Gtk.Window):
         self.present()
         self.grab_focus()
 
-        GLib.timeout_add_seconds(5, self.close_splash)
+        # GLib.timeout_add_seconds(5, self.close_splash)
 
     def close_splash(self):
         self.destroy()
         return False
 
-    def close_window(self, widget, event):
-        self.close_splash()
-
 
 def your_country_needs_you():
     sp = SplashScreen()
     sp.show()
+    return sp
 
 
 # See jenkins_lib.Window.py for more details about how this class works

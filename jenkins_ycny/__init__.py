@@ -5,6 +5,13 @@
 
 import optparse
 
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+gi.require_version("GLib", "2.0")
+gi.require_version("Gio", "2.0")
+gi.require_version('Notify', "0.7")
+
 from locale import gettext as _
 from gi.repository import Gtk  # pylint: disable=E0611
 from jenkins_ycny import JenkinsWindow
