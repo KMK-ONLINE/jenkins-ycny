@@ -1,17 +1,15 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
-### BEGIN LICENSE
+# ## BEGIN LICENSE
 # This file is in the public domain
-### END LICENSE
+# ## END LICENSE
 
 import optparse
 
 from locale import gettext as _
-
-from gi.repository import Gtk # pylint: disable=E0611
-
+from gi.repository import Gtk  # pylint: disable=E0611
 from jenkins_ycny import JenkinsWindow
-
 from jenkins_lib import set_up_logging, get_version
+
 
 def parse_options():
     """Support for command line options"""
@@ -23,11 +21,12 @@ def parse_options():
 
     set_up_logging(options)
 
+
 def main():
     'constructor for your class instances'
     parse_options()
 
     # Run the application.    
     window = JenkinsWindow.JenkinsWindow()
-    #window.show()
+    window.hide()
     Gtk.main()

@@ -1,7 +1,7 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
-### BEGIN LICENSE
+# ## BEGIN LICENSE
 # This file is in the public domain
-### END LICENSE
+# ## END LICENSE
 
 # This is your preferences dialog.
 #
@@ -9,19 +9,18 @@
 # data/glib-2.0/schemas/net.launchpad.jenkins.gschema.xml
 # See http://developer.gnome.org/gio/stable/GSettings.html for more info.
 
-from gi.repository import Gio # pylint: disable=E0611
-
-from locale import gettext as _
+from gi.repository import Gio  # pylint: disable=E0611
+# from locale import gettext as _
+from jenkins_lib.PreferencesDialog import PreferencesDialog
 
 import logging
 logger = logging.getLogger('jenkins')
 
-from jenkins_lib.PreferencesDialog import PreferencesDialog
 
 class PreferencesJenkinsDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesJenkinsDialog"
 
-    def finish_initializing(self, builder): # pylint: disable=E1002
+    def finish_initializing(self, builder):  # pylint: disable=E1002
         """Set up the preferences dialog"""
         super(PreferencesJenkinsDialog, self).finish_initializing(builder)
 
@@ -29,26 +28,19 @@ class PreferencesJenkinsDialog(PreferencesDialog):
         settings = Gio.Settings("net.launchpad.jenkins-ycny")
 
         widget = self.builder.get_object('proj_dir_entry')
-        settings.bind("project-dir", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+        settings.bind(
+            "project-dir", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
         widget = self.builder.get_object('ci_url_entry')
-        settings.bind("ci-url", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+        settings.bind(
+            "ci-url", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
         widget = self.builder.get_object('m_job_entry')
-        settings.bind("master-job", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+        settings.bind(
+            "master-job", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
         widget = self.builder.get_object('s_job_entry')
-        settings.bind("slave-jobs", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+        settings.bind(
+            "slave-jobs", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
         # Code for other initialization actions should be added here.
-    
-
-        self.connect('delete-event', self.apply_config)
-
-    def apply_config(self, widget, event):
-        print "Ok1"
-        return False
-
-    def on_btn_close_clicked(self, widget, data=None):
-        print "Ok2"
-        PreferencesDialog.on_btn_close_clicked(self, widget, data)

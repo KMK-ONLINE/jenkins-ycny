@@ -1,6 +1,6 @@
 [Desktop Entry]
 _Name=Jenkins
-_Comment=Jenkins application
+_Comment=Jenkins YCNY application
 Categories=GNOME;Utility;
 Exec=jenkins
 Icon=jenkins
