@@ -40,12 +40,13 @@ class GitSuspect(object):
 
         user_email = self.repo.config_reader().get_value('user', 'email')
         user_name = self.repo.config_reader().get_value('user', 'name')
-        return (user_email, user_name)
+        user_id = user_email.split('@', 1)[0]
+        return (user_id, user_email, user_name)
 
 
 class SplashScreen(Gtk.Window):
     def __init__(self):
-        Gtk.Window.__init__(self, title="Hello World")
+        Gtk.Window.__init__(self, title="Your Country Needs You")
 
         icon_uri = get_media_file('YourCountryNeedsYou.jpg')
         icon_path = icon_uri.replace("file:///", '')
