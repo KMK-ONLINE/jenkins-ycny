@@ -21,6 +21,14 @@ import logging
 logger = logging.getLogger('jenkins')
 
 
+def extract_pair_users(user_id):
+    if user_id.startswith('pair+'):
+        users = user_id.split('+')[1:]
+    else:
+        users = [user_id]
+    return users
+
+
 class GitSuspect(object):
     def __init__(self, window):
         self.window = window
@@ -125,7 +133,7 @@ class JenkinsWindow(Window):
 
             if self.job_states.get(job.name) != st:
                 self.job_states[job.name] = st
-                if st not in ('BUILDING', 'SUCCESS'):
+                if st not in ('BUILDING', 'SUCCESS', 'ERROR'):
                     return job.lastBuild.culprits
         except Exception as e:
             logger.exception(e)
@@ -140,13 +148,18 @@ class JenkinsWindow(Window):
         for name in obj.s_jobs:
             culprits += self.culprits_failed_job(obj.s_jobs[name])
 
+        users = []
+        for culprit in culprits:
+            users += extract_pair_users(culprit)
+
+        ours = extract_pair_users(self.suspect.current_user()[0])
+
         logger.debug(self.job_states)
-        logger.debug(culprits)
+        logger.debug(users)
+        logger.debug(ours)
         logger.debug(self.suspect.current_user())
 
-        me = self.suspect.current_user()[0]
-
-        if me in culprits:
+        if set(ours) & set(users):
             your_country_needs_you()
 
     def on_preferences_dialog_destroyed(self, widget, data=None):
