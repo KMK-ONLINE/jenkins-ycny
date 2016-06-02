@@ -32,11 +32,12 @@ APPINDICATOR_ID = 'jenkins_ycny'
 
 
 class Status(object):
-    def __init__(self, name):
+    def __init__(self, name, ci_url):
         self.name = name
         self._state = None
         self._last_state = None
         self._menu_item = None
+        self.ci_url = ci_url
 
     @property
     def state(self):
@@ -83,6 +84,8 @@ class Status(object):
 
         mnu_job.show()
 
+        mnu_job.connect("activate", self.on_mnu_click)
+
         return self._menu_item
 
     def set_image(self, filename):
@@ -100,6 +103,12 @@ class Status(object):
         mnu_job.set_always_show_image(True)
 
         return img
+
+    def on_mnu_click(self, widget, data=None):
+        import webbrowser
+
+        url = self.ci_url + '/job/' + self.name
+        webbrowser.open(url)
 
 
 class Indicator(object):
@@ -233,9 +242,12 @@ class Indicator(object):
         self.master_job = None
         self.slave_jobs = dict()
 
+        ci_url = self.window.settings.get_string('ci-url')
+
         m_job_name = self.window.settings.get_string('master-job')
         if m_job_name:
-            status_m_job = Status(self.window.settings.get_string('master-job'))
+            name = self.window.settings.get_string('master-job')
+            status_m_job = Status(name, ci_url)
 
             self.master_job = status_m_job
             self.menu.insert(status_m_job.menu_item, 0)
@@ -243,7 +255,7 @@ class Indicator(object):
         for name in self.window.settings.get_string('slave-jobs').split(','):
             name = name.strip()
             if name:
-                status_s_job = Status(name)
+                status_s_job = Status(name, ci_url)
                 self.slave_jobs[name] = status_s_job
                 self.menu.insert(status_s_job.menu_item, len(self.slave_jobs))
 
