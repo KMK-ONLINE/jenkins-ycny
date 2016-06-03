@@ -1,26 +1,52 @@
-Jenkins YCNY (Your Country Needs You)
-=====================================
+### Jenkins YCNY (Your Country Needs You)
 
-Ubuntu 14.04 Desktop Notification for Jenkins Build.
+## Install
+
+Ubuntu 14.04/16.04 Desktop Notification for Jenkins Build.
 
 ```
-$ apt-get quickly python-gi
+$ sudo apt-get install python-gi
 ```
 
+Additional Python package:
 
-Resources
----------
+```
+$ sudo pip install -r requirements.txt
+```
 
-* https://wiki.ubuntu.com/Quickly
+Test Running:
+
+```
+$ bin/jenkins-ycny -v
+```
+
+Install to Desktop and Autostart:
+
+```
+$ python setup.py
+```
+
+Resources:
 * http://candidtim.github.io/appindicator/2014/09/13/ubuntu-appindicator-step-by-step.html
 * https://www.philipphoffmann.de/gnome-3-shell-extension-jenkins-ci-server-indicator/
 * https://www.google.co.id/search?q=your+country+needs+you
 
 
-Development
------------
+## Development
 
-* https://wiki.gnome.org/action/show/Projects/PyGObject
+# Quickly (Ubuntu 14.04)
+
+Developing using Ubuntu 14.04 Quickly:
+
+```
+sudo apt-get install quickly
+```
+
+Docs:
+* https://wiki.ubuntu.com/Quickly
+
+
+# PyGObject (PyGI)
 
 Version:
 ```
@@ -46,4 +72,7 @@ For function use `__doc__` instead `help()`:
 >>> Gtk.Window.modify_bg.__doc__
 modify_bg(self, state:Gtk.StateType, color:Gdk.Color=None)
 ```
+
+Docs:
+* https://wiki.gnome.org/action/show/Projects/PyGObject
 
